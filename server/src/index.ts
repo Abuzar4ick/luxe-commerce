@@ -1,12 +1,24 @@
 import express from "express";
 import path from "path";
+import cors from "cors";
+import helmet from "helmet";
+
+import routes from "./routes/index.js";
+import errorHandler from "./middleware/errorHandler.js";
 
 import { ENV } from "./config/env.js";
 
 const app = express();
 
-app.use(express.json());
+// Security middleware
+app.use(helmet());
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
+
+// Body parsing
+app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/api", routes);
 
 if (ENV.NODE_ENV === "production") {
   const __dirname = path.resolve();
@@ -18,8 +30,8 @@ if (ENV.NODE_ENV === "production") {
   });
 }
 
+app.use(errorHandler);
+
 app.listen(ENV.PORT, () => {
   console.log(`Server is running on port ${ENV.PORT}`);
 });
-
-export default app;
