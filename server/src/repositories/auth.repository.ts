@@ -26,6 +26,15 @@ export const authRepository = {
     return result.rows[0] ?? null;
   },
 
+  getUserById: async (id: number): Promise<User | null> => {
+    const result = await pool.query<User>(
+      "SELECT * FROM users WHERE id = $1",
+      [id],
+    );
+
+    return result.rows[0] ?? null;
+  },
+
   // Redis operations for OTP codes and refresh tokens
 
   storeOTPCode: async (email: string, otpCode: string): Promise<void> => {
@@ -41,7 +50,18 @@ export const authRepository = {
     await redisClient.del(email);
   },
 
-  storeRefreshToken: async (userId: string, refreshToken: string): Promise<void> => {
+  storeRefreshToken: async (
+    userId: string,
+    refreshToken: string,
+  ): Promise<void> => {
     await redisClient.set(userId, refreshToken, { EX: 7 * 24 * 60 * 60 });
-  }
+  },
+
+  getRefreshToken: async (userId: string): Promise<string | null> => {
+    return await redisClient.get(userId);
+  },
+
+  deleteRefreshToken: async (userId: string): Promise<void> => {
+    await redisClient.del(userId);
+  },
 };
