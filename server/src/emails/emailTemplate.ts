@@ -1,5 +1,5 @@
 export function otpEmailHtml(otp: string): string {
-  const expiresIn = "10 minutes";
+  const expiresIn = "5 minutes";
   const spacedCode = otp.split("").join(" ");
 
   const logoBlock = `<span style="font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;letter-spacing:6px;color:#0a0a0a;text-transform:uppercase;">LUXE</span>`;
