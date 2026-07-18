@@ -15,8 +15,13 @@ export const ENV = {
   DB_HOST: process.env.DB_HOST,
   DB_PORT: process.env.DB_PORT,
 
+  JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET,
+  JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
+
   RESEND_API_KEY: process.env.RESEND_API_KEY,
 
   EMAIL_FROM: process.env.EMAIL_FROM,
   EMAIL_FROM_NAME: process.env.EMAIL_FROM_NAME,
+
+  REDIS_URL: process.env.REDIS_URL,
 };

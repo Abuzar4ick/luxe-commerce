@@ -26,7 +26,7 @@ type AppErrorLike = Error & Partial<AppError> & Partial<PgError>;
 
 export function errorHandler(
   err: AppErrorLike,
-  req: Request,
+  _: Request,
   res: Response,
   next: NextFunction,
 ): void {

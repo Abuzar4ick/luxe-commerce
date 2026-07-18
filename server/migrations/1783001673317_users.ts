@@ -5,9 +5,9 @@ export const shorthands: ColumnDefinitions | undefined = undefined;
 export async function up(pgm: MigrationBuilder): Promise<void> {
     pgm.sql(`
         CREATE TABLE users (
-            id INTEGER PRIMARY KEY,
-            first_name VARCHAR(50) NOT NULL,
-            last_name VARCHAR(50) NOT NULL,
+            id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            first_name VARCHAR(50),
+            last_name VARCHAR(50),
             email VARCHAR(255) NOT NULL UNIQUE,
             created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         );
