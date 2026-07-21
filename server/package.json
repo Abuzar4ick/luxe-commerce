@@ -7,7 +7,7 @@
     "dev": "nodemon --exec tsx src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "migrate": "node-pg-migrate"
+    "migrate": "node-pg-migrate --migrations-dir src/migrations"
   },
   "dependencies": {
     "@types/cors": "^2.8.19",
