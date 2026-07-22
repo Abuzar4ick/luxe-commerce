@@ -11,6 +11,7 @@ interface User {
   first_name?: string;
   last_name?: string;
   email: string;
+  role: "user" | "admin";
   created_at?: Date;
 }
 
@@ -34,7 +35,11 @@ export const authService = {
 
     await authRepository.deleteOTPCode(email);
 
-    const accessToken = await generateToken(user.id?.toString() || "", res);
+    const accessToken = await generateToken(
+      user.id?.toString() || "",
+      user.role || "user",
+      res,
+    );
 
     return { message: "OTP code is valid.", accessToken };
   },
@@ -65,7 +70,7 @@ export const authService = {
     }
 
     const newAccessToken = jwt.sign(
-      { id: payload.id },
+      { id: payload.id, role: existingUser.role },
       ENV.JWT_ACCESS_SECRET!,
       {
         expiresIn: "15m",
