@@ -4,7 +4,7 @@ import { ENV } from "../config/env.js";
 import { authRepository } from "../repositories/auth.repository.js";
 
 // Generate access and refresh JWT tokens
-export const generateToken = async (userId: string, res: Response) => {
+export const generateToken = async (userId: string, role: string, res: Response) => {
   if (!ENV.JWT_ACCESS_SECRET || !ENV.JWT_REFRESH_SECRET) {
     throw {
       status: 500,
@@ -13,11 +13,11 @@ export const generateToken = async (userId: string, res: Response) => {
     };
   }
 
-  const accessToken = jwt.sign({ id: userId }, ENV.JWT_ACCESS_SECRET, {
+  const accessToken = jwt.sign({ id: userId, role }, ENV.JWT_ACCESS_SECRET, {
     expiresIn: "15m",
   });
 
-  const refreshToken = jwt.sign({ id: userId }, ENV.JWT_REFRESH_SECRET, {
+  const refreshToken = jwt.sign({ id: userId, role }, ENV.JWT_REFRESH_SECRET, {
     expiresIn: "7d",
   });
 
