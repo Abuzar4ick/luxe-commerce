@@ -4,6 +4,7 @@ declare global {
       cookies?: { [key: string]: string };
       user?: {
         id: string;
+        role: "user" | "admin"
       };
     }
   }
